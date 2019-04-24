@@ -9,6 +9,7 @@ class TodoForm extends Component {
     }
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.handleClearCompleted = this.handleClearCompleted.bind(this);
   }
 
   handleOnChange(event) {
@@ -19,17 +20,28 @@ class TodoForm extends Component {
   }
 
   handleOnSubmit(event) {
+    const todo = {
+      task: this.state.value,
+      id: Date.now(),
+      completed: false,
+    }
+    this.props.handleAddTodo(todo);
     event.preventDefault();
-    this.props.handleOnSubmit();
   }
 
-  render() { 
+  handleClearCompleted(event) {
+    this.props.handleClearCompleted(event);
+    event.preventDefault();
+  }
+
+  render() {
     return (
       <div>
         TodoForm: 
         <form onSubmit={this.handleOnSubmit}>
           <input type="text" value={this.state.value} onChange={this.handleOnChange} />
           <input type="submit" value="submit" />
+          <input type="button" value="clear" onClick={this.handleClearCompleted} />
         </form>
       </div>
     );

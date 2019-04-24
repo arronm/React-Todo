@@ -19,28 +19,36 @@ class App extends Component {
           completed: false,
         }
       ],
-     }
+    }
+    this.handlers = {
+      handleClearCompleted: this.handleClearCompleted.bind(this),
+      handleAddTodo: this.handleAddTodo.bind(this),
+    }
   }
 
   handleTodoClick(todo) {
     // Toggle state of todo.completed
+    console.log('handling todos');
   };
 
   handleClearCompleted() {
     // Filter this.state.todos and only keep ones that are completed: false
+    console.log('Clearing all completed');
   }
 
   handleAddTodo(todo) {
     // Update our state with our new Todo data
-    console.log('Adding Todo');
+    this.setState({
+      todos: [...this.state.todos, todo],
+    });
   }
 
   render() {
     return (
       <div>
         Todo App
-        <TodoList {...this.state} />
-        <TodoForm handleOnSubmit={this.handleAddTodo} />
+        <TodoList {...this.state} handleTodoClick={this.handleTodoClick}  />
+        <TodoForm {...this.handlers} />
       </div>
      );
   }

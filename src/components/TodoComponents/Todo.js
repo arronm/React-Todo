@@ -10,16 +10,14 @@ class Todo extends Component {
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  handleOnClick() {
-    // This function should toggle the todo completed state;
-    // Can I pass this.state.id?
-    this.props.handleOnClick(this.state.id);
+  handleOnClick(event) {
+    this.props.handleOnClick(event);
   }
 
-  render() { 
-    return ( 
-      <div>
-        Todo
+  render() {
+    return (
+      <div onClick={this.handleOnClick}>
+        {this.state.task}
       </div>
      );
   }
