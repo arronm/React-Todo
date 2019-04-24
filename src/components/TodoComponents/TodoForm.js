@@ -26,6 +26,10 @@ class TodoForm extends Component {
       completed: false,
     }
     this.props.handleAddTodo(todo);
+    this.setState({
+      ...this.state,
+      value: '',
+    })
     event.preventDefault();
   }
 

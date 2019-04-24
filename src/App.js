@@ -20,15 +20,37 @@ class App extends Component {
         }
       ],
     }
+    this.handleTodoClick = this.handleTodoClick.bind(this);
     this.handlers = {
       handleClearCompleted: this.handleClearCompleted.bind(this),
       handleAddTodo: this.handleAddTodo.bind(this),
-    }
+    };
   }
 
-  handleTodoClick(todo) {
+  handleTodoClick(todoId) {
     // Toggle state of todo.completed
-    console.log('handling todos');
+    // const todo = Object.values(this.state.todos[todoKey]);
+    // todo[2] = true;
+    // this.setState({
+    //   ...this.state,
+    //   todos: [...this.state.todos, todo],
+    // });
+    this.setState(state => {
+      const todos = this.state.todos.map(todo => {
+        if (todo.id === todoId) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          }
+        }
+
+        return todo;
+      });
+      return {
+        ...this.state,
+        todos: todos,
+      };
+    });
   };
 
   handleClearCompleted() {

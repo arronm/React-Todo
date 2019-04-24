@@ -9,7 +9,7 @@ class TodoList extends Component {
     return (
       <div>
         Todo List:
-        {this.props.todos.map(todo => <Todo key={todo.id} todo={todo} handleOnClick={this.props.handleTodoClick} />)}
+        {this.props.todos.map((todo, index) => <Todo key={index} todo={todo} handleOnClick={this.props.handleTodoClick} />)}
       </div>
      );
   }
