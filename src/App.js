@@ -29,14 +29,8 @@ class App extends Component {
 
   handleTodoClick(todoId) {
     // Toggle state of todo.completed
-    // const todo = Object.values(this.state.todos[todoKey]);
-    // todo[2] = true;
-    // this.setState({
-    //   ...this.state,
-    //   todos: [...this.state.todos, todo],
-    // });
     this.setState(state => {
-      const todos = this.state.todos.map(todo => {
+      const todos = state.todos.map(todo => {
         if (todo.id === todoId) {
           return {
             ...todo,
@@ -47,7 +41,7 @@ class App extends Component {
         return todo;
       });
       return {
-        ...this.state,
+        ...state,
         todos: todos,
       };
     });
@@ -55,7 +49,12 @@ class App extends Component {
 
   handleClearCompleted() {
     // Filter this.state.todos and only keep ones that are completed: false
-    console.log('Clearing all completed');
+    this.setState(state => {
+      return {
+        ...state,
+        todos: state.todos.filter(todo => !todo.completed),
+      }
+    });
   }
 
   handleAddTodo(todo) {

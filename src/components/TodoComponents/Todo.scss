@@ -1,3 +1,7 @@
-.completed-true {
-  text-decoration: line-through;
+.Todo {
+  cursor: pointer;
+
+  &.completed-true {
+    text-decoration: line-through;
+  }
 }
