@@ -32,6 +32,7 @@ class App extends Component {
 
   handleAddTodo(todo) {
     // Update our state with our new Todo data
+    console.log('Adding Todo');
   }
 
   render() {
@@ -39,7 +40,7 @@ class App extends Component {
       <div>
         Todo App
         <TodoList {...this.state} />
-        <TodoForm />
+        <TodoForm handleOnSubmit={this.handleAddTodo} />
       </div>
      );
   }

@@ -5,13 +5,32 @@ class TodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todo: '',
+      value: '',
     }
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
+
+  handleOnChange(event) {
+    this.setState({
+      ...this.state,
+      value: event.target.value,
+    })
+  }
+
+  handleOnSubmit(event) {
+    event.preventDefault();
+    this.props.handleOnSubmit();
+  }
+
   render() { 
     return (
       <div>
-        TodoForm
+        TodoForm: 
+        <form onSubmit={this.handleOnSubmit}>
+          <input type="text" value={this.state.value} onChange={this.handleOnChange} />
+          <input type="submit" value="submit" />
+        </form>
       </div>
     );
   }
