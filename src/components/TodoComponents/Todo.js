@@ -69,7 +69,7 @@ class Todo extends Component {
             ? null
             : (
                 <span className="toggle-child-form" onClick={this.toggleChildForm}>
-                  { this.state.adding ? String.fromCharCode(215) : '+' }
+                  { this.state.adding ? '' : '+' }
                 </span>
               )
           }
