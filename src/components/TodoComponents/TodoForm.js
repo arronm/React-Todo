@@ -10,10 +10,29 @@ class TodoForm extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
+
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   componentDidMount() {
     this.nameInput.focus();
+    
+    // Check if this form has a handle blur function, meaning it's a child form
+    if (this.props.handleBlur) {
+      document.addEventListener('mousedown', this.handleBlur, false);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.handleBlur) {
+      document.removeEventListener('mousedown', this.handleBlur, false);
+    }
+  }
+
+  handleBlur(event) {
+    if (!event.path[2].matches('.TodoForm')) {
+      this.props.handleBlur();
+    }
   }
 
   handleOnChange(event) {
@@ -53,7 +72,6 @@ class TodoForm extends Component {
       <div className="TodoForm">
         <form onSubmit={this.handleOnSubmit}>
           <input
-            onBlur={this.props.handleBlur}
             ref={(input) => { this.nameInput = input; }}
             className="todo-input"
             type="text"
