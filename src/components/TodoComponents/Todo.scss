@@ -1,7 +1,60 @@
-.Todo {
-  cursor: pointer;
+.TodoForm {
+  form {
+    display: flex;
+    
+    .todo-input {
+      width: 80%;
+      box-sizing: border-box;
+      border: 1px solid lightgray;
+    }
+    
+    .todo-submit {
+      width: 20%;
+      background: white;
+      border: 1px solid lightgray;
+      border-left: none;
+      cursor: pointer;
+    }
+    
+  }
 
-  &.completed-true {
-    text-decoration: line-through;
+  input {
+    height: 60px;
+    font-size: 1.2rem;
+    padding: 5px 30px;
+  }
+
+  .clear-todos {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    background: #f5f5f5;
+    margin: 15px 0 0;
   }
 }
+
+.TodoList {
+  border: 1px solid lightgray;
+  margin-top: 15px;
+
+  .Todo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.3rem;
+    padding: 5px 30px;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid lightgray;
+    }
+  
+  
+    &.completed-true {
+      text-decoration: line-through;
+      color: lightgray;
+    }
+  }
+}
+

@@ -20,17 +20,23 @@ class TodoForm extends Component {
   }
 
   handleOnSubmit(event) {
+    event.preventDefault();
+    if (this.state.value === '') return;
+
     const todo = {
       task: this.state.value,
       id: Date.now(),
       completed: false,
     }
+    
     this.props.handleAddTodo(todo);
-    this.setState({
-      ...this.state,
-      value: '',
-    })
-    event.preventDefault();
+    
+    this.setState(state => {
+      return {
+        ...state,
+        value: '',
+      };
+    });
   }
 
   handleClearCompleted(event) {
@@ -40,13 +46,15 @@ class TodoForm extends Component {
 
   render() {
     return (
-      <div>
-        TodoForm: 
+      <div className="TodoForm">
         <form onSubmit={this.handleOnSubmit}>
-          <input type="text" value={this.state.value} onChange={this.handleOnChange} />
-          <input type="submit" value="submit" />
-          <input type="button" value="clear" onClick={this.handleClearCompleted} />
+          <input className="todo-input" type="text" value={this.state.value} onChange={this.handleOnChange} placeholder="What needs to be done?" />
+          <input className="todo-submit" type="submit" value="Add" />
         </form>
+        {
+          this.props.completed &&
+          <input className="clear-todos" type="button" value="Clear Completed" onClick={this.handleClearCompleted} />
+        }
       </div>
     );
   }

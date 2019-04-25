@@ -1,0 +1,20 @@
+body {
+  font-size: 62.5%;
+  background: #f5f5f5;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 3.6rem;
+    margin: 30px auto; 
+  }
+
+  /* temp */
+  // background: green;
+}

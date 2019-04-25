@@ -2,24 +2,18 @@ import React, { Component } from 'react';
 import './App.scss';
 import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
+import TodosDatabase from './helpers/TodosDatabase';
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.todos = new TodosDatabase;
+
     this.state = {
-      todos: [
-        {
-          task: 'Organize Garage',
-          id: 1528817077286,
-          completed: false,
-        },
-        {
-          task: 'Bake Cookies',
-          id: 1528817084358,
-          completed: false,
-        }
-      ],
+      todos: this.todos.database,
+      completed: false,
     }
+
     this.handleTodoClick = this.handleTodoClick.bind(this);
     this.handlers = {
       handleClearCompleted: this.handleClearCompleted.bind(this),
@@ -28,7 +22,6 @@ class App extends Component {
   }
 
   handleTodoClick(todoId) {
-    // Toggle state of todo.completed
     this.setState(state => {
       const todos = state.todos.map(todo => {
         if (todo.id === todoId) {
@@ -43,22 +36,24 @@ class App extends Component {
       return {
         ...state,
         todos: todos,
+        completed: this.checkCompleted(todos),
       };
     });
   };
 
+  checkCompleted(todos) {
+    return todos.filter(todo => todo.completed).length > 0;
+  }
+
   handleClearCompleted() {
-    // Filter this.state.todos and only keep ones that are completed: false
-    this.setState(state => {
-      return {
-        ...state,
-        todos: state.todos.filter(todo => !todo.completed),
-      }
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.filter(todo => !todo.completed),
+      completed: false,
     });
   }
 
   handleAddTodo(todo) {
-    // Update our state with our new Todo data
     this.setState({
       todos: [...this.state.todos, todo],
     });
@@ -66,10 +61,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        Todo App
+      <div className="App">
+        <h1>Todo List</h1>
+        <TodoForm {...this.handlers} completed={this.state.completed} />
         <TodoList {...this.state} handleTodoClick={this.handleTodoClick}  />
-        <TodoForm {...this.handlers} />
       </div>
      );
   }

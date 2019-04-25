@@ -6,10 +6,18 @@ import Todo from './Todo';
 
 class TodoList extends Component {
   render() {
+    console.log(this.props.todos)
     return (
-      <div>
-        Todo List:
-        {this.props.todos.map((todo, index) => <Todo key={index} todo={todo} handleOnClick={this.props.handleTodoClick} />)}
+      <div className="TodoList">
+        {
+          this.props.todos.map((todo, index) => (
+            <Todo
+              key={index}
+              todo={todo}
+              handleOnClick={this.props.handleTodoClick}
+            />
+          )).sort((a, b) => a.props.todo.completed ? 1 : -1)
+        }
       </div>
      );
   }
