@@ -10,7 +10,7 @@
     
     .todo-submit {
       width: 20%;
-      background: white;
+      background: #fcfcfc;
       border: 1px solid lightgray;
       border-left: none;
       cursor: pointer;
@@ -45,6 +45,7 @@
     line-height: 60px;
     font-size: 1.3rem;
     padding: 5px 30px;
+    background: #fcfcfc;
     
     &:not(:last-child) {
       border-bottom: 1px solid lightgray;

@@ -6,7 +6,6 @@ import Todo from './Todo';
 
 class TodoList extends Component {
   render() {
-    console.log(this.props.todos)
     return (
       <div className="TodoList">
         {
