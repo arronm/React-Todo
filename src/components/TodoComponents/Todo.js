@@ -18,15 +18,31 @@ class Todo extends Component {
     }
   }
 
-  handleOnClick() {
-    this.props.handleOnClick(this.state.id);
+  handleOnClick(e) {
+    const child = this.props.child || false;
+    this.props.handleOnClick(this.state.id, child);
   }
 
   render() {
     const completedClass = `completed-${this.state.completed}`;
     return (
-      <div onClick={this.handleOnClick} className={`Todo ${completedClass}`}>
-        {this.state.task}
+      <div className={this.props.child ? 'child' : 'parent'}>
+        <div onClick={this.handleOnClick} className={`Todo ${completedClass}`}>
+          {this.state.task}
+        </div>
+        { this.state.todos
+          ? (
+            this.state.todos.map((todo, index) => (
+              <Todo
+                key={index}
+                todo={todo}
+                child={this}
+                handleOnClick={this.props.handleOnClick}
+              />
+            ))
+          )
+          : null
+        }
       </div>
      );
   }

@@ -22,10 +22,39 @@ class App extends Component {
     };
   }
 
-  handleTodoClick(todoId) {
+  handleTodoClick(todoId, child) {
+    // SUPER CONFUSING: the child param is actually the parent object
+    // TODO: Probably definitely need to restructure this in the future
+    //       needs to be easier to reason about
+    let childTodos
     this.setState(state => {
+      if (child) {
+        childTodos = child.state.todos.map(todo => {
+          if (todo.id === todoId) {
+            return {
+              ...todo,
+              completed: !todo.completed,
+            }
+          }
+
+          return todo;
+        });
+      }
+
+      if (child) {
+        // Probably not a pure function at this point
+        todoId = child.state.id;
+      }
+
       const todos = state.todos.map(todo => {
         if (todo.id === todoId) {
+          if (child) {
+            console.log('catch22', childTodos);
+            return {
+              ...todo,
+              todos: childTodos,
+            }
+          }
           return {
             ...todo,
             completed: !todo.completed,

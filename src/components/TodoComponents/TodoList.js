@@ -13,6 +13,7 @@ class TodoList extends Component {
             <Todo
               key={index}
               todo={todo}
+              child={false}
               handleOnClick={this.props.handleTodoClick}
             />
           )).sort((a, b) => a.props.todo.completed ? 1 : -1)
