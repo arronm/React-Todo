@@ -27,17 +27,15 @@ class TodosDatabase {
     return mockTodos;
   }
 
-  getDatabase = () => {
-    return JSON.parse(localStorage.getItem(dbName));
-  }
+  getDatabase = () => JSON.parse(localStorage.getItem(dbName));
 
-  save = (todo) => {
+  add = (todo) => {
     this.database = [...this.database, todo];
     localStorage.setItem(dbName, JSON.stringify(this.database));
     return this.database;
   }
   
-  clear = (todos) => {
+  update = (todos) => {
     this.database = todos;
     localStorage.setItem(dbName, JSON.stringify(this.database));
     return this.database;

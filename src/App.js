@@ -7,11 +7,12 @@ import TodosDatabase from './helpers/TodosDatabase';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.todos = new TodosDatabase;
+
+    this.todos = new TodosDatabase();
 
     this.state = {
       todos: this.todos.database,
-      completed: false,
+      completed: this.checkCompleted(this.todos.database),
     }
 
     this.handleTodoClick = this.handleTodoClick.bind(this);
@@ -33,11 +34,15 @@ class App extends Component {
 
         return todo;
       });
+
+      this.todos.update(todos);
+
       return {
         ...state,
         todos: todos,
         completed: this.checkCompleted(todos),
       };
+
     });
   };
 
