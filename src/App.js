@@ -56,12 +56,17 @@ class App extends Component {
       todos: this.state.todos.filter(todo => !todo.completed),
       completed: false,
     });
+
+
+    this.todos.update(this.state.todos.filter(todo => !todo.completed))
   }
 
   handleAddTodo(todo) {
     this.setState({
       todos: [...this.state.todos, todo],
     });
+
+    this.todos.add(todo);
   }
 
   render() {
