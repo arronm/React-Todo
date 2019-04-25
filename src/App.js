@@ -16,6 +16,8 @@ class App extends Component {
     }
 
     this.handleTodoClick = this.handleTodoClick.bind(this);
+    this.handleAddSubTodo = this.handleAddSubTodo.bind(this);
+
     this.handlers = {
       handleClearCompleted: this.handleClearCompleted.bind(this),
       handleAddTodo: this.handleAddTodo.bind(this),
@@ -42,14 +44,13 @@ class App extends Component {
       }
 
       if (child) {
-        // Probably not a pure function at this point
+        // TODO: Refactor, probably not a pure function at this point
         todoId = child.state.id;
       }
 
       const todos = state.todos.map(todo => {
         if (todo.id === todoId) {
           if (child) {
-            console.log('catch22', childTodos);
             return {
               ...todo,
               todos: childTodos,
@@ -71,30 +72,73 @@ class App extends Component {
         todos: todos,
         completed: this.checkCompleted(todos),
       };
-
     });
   };
 
   checkCompleted(todos) {
-    return todos.filter(todo => todo.completed).length > 0;
+    return todos.filter(todo => {
+      if (todo.todos) {
+        if (this.checkCompleted(todo.todos)) {
+          return this.checkCompleted(todo.todos);
+        }
+      }
+      return todo.completed
+    }).length > 0;
   }
 
   handleClearCompleted() {
-    this.setState({
-      ...this.state,
-      todos: this.state.todos.filter(todo => !todo.completed),
-      completed: false,
+    this.setState(state => {
+      const todosList = state.todos.map(todo => {
+        if (todo.todos) {
+          return {
+            ...todo,
+            todos: todo.todos.filter(todo => !todo.completed),
+          }
+        }
+        return todo;
+      }).filter(todo => !todo.completed);
+
+      this.todos.update(todosList);
+
+      return {
+        ...state,
+        todos: todosList,
+        completed: false,
+      }
     });
+  }
 
+  handleAddSubTodo(parentTodo, childTodo) {
+    this.setState(state => {
+      const todosList = state.todos.map((todo) => {
+        if (todo.id === parentTodo.id) {
+          if (todo.todos) {
+            return {
+              ...todo,
+              todos: [...todo.todos, childTodo]
+            }
+          }
+          return {
+            ...todo,
+            todos: [childTodo],
+          }
+        }
+        return todo;
+      });
 
-    this.todos.update(this.state.todos.filter(todo => !todo.completed))
+      this.todos.update(todosList);
+
+      return {
+        ...state,
+        todos: todosList,
+      }
+    });
   }
 
   handleAddTodo(todo) {
     this.setState({
       todos: [...this.state.todos, todo],
     });
-
     this.todos.add(todo);
   }
 
@@ -103,7 +147,7 @@ class App extends Component {
       <div className="App">
         <h1>Todo List</h1>
         <TodoForm {...this.handlers} completed={this.state.completed} />
-        <TodoList {...this.state} handleTodoClick={this.handleTodoClick}  />
+        <TodoList {...this.state} handleTodoClick={this.handleTodoClick} handleAddSubTodo={this.handleAddSubTodo}  />
       </div>
      );
   }

@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './Todo.scss';
 import Todo from './Todo';
 
 // Receive list of Todos from App
 
-class TodoList extends Component {
+class TodoList extends PureComponent {
   render() {
     return (
       <div className="TodoList">
         {
-          this.props.todos.map((todo, index) => (
+          this.props.todos.map((todo) => (
             <Todo
-              key={index}
+              key={todo.id}
               todo={todo}
               child={false}
               handleOnClick={this.props.handleTodoClick}
+              handleAddSubTodo={this.props.handleAddSubTodo}
             />
           )).sort((a, b) => a.props.todo.completed ? 1 : -1)
         }

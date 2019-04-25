@@ -12,6 +12,10 @@ class TodoForm extends Component {
     this.handleClearCompleted = this.handleClearCompleted.bind(this);
   }
 
+  componentDidMount() {
+    this.nameInput.focus();
+  }
+
   handleOnChange(event) {
     this.setState({
       ...this.state,
@@ -48,7 +52,14 @@ class TodoForm extends Component {
     return (
       <div className="TodoForm">
         <form onSubmit={this.handleOnSubmit}>
-          <input className="todo-input" type="text" value={this.state.value} onChange={this.handleOnChange} placeholder="What needs to be done?" />
+          <input
+            ref={(input) => { this.nameInput = input; }}
+            className="todo-input"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleOnChange}
+            placeholder="What needs to be done?"
+          />
           <input className="todo-submit" type="submit" value="Add" />
         </form>
         {
