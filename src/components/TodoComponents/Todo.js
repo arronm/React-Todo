@@ -11,6 +11,7 @@ class Todo extends Component {
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleAddSubTodo = this.handleAddSubTodo.bind(this);
     this.toggleChildForm = this.toggleChildForm.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
   
   componentDidMount() {
@@ -28,6 +29,13 @@ class Todo extends Component {
     return {
       ...nextProps.todo,
     }
+  }
+
+  handleBlur() {
+    this.setState({
+      ...this.state,
+      adding: false,
+    })
   }
 
   handleOnClick(e) {
@@ -69,7 +77,7 @@ class Todo extends Component {
         { this.state.adding
           ? (
               <div className="childForm">
-                <TodoForm handleAddTodo={this.handleAddSubTodo} />
+                <TodoForm handleBlur={this.handleBlur} handleAddTodo={this.handleAddSubTodo} />
               </div>
             )
           : null

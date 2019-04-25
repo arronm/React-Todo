@@ -53,6 +53,7 @@ class TodoForm extends Component {
       <div className="TodoForm">
         <form onSubmit={this.handleOnSubmit}>
           <input
+            onBlur={this.props.handleBlur}
             ref={(input) => { this.nameInput = input; }}
             className="todo-input"
             type="text"
