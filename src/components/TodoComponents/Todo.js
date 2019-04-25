@@ -23,7 +23,7 @@ class Todo extends Component {
   }
 
   // I haven't looked into exactly what this does, but componentWillReceiveProps
-  //   will be depreciated, this is the replacement
+  //   will be depreciated, this is the replacement 
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
       ...nextProps.todo,
